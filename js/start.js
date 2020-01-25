@@ -6,11 +6,9 @@ var CLOUD_X = 100;
 var CLOUD_Y = 10;
 var GAP = 10;
 var FONT_SIZE = 15;
-// var TEXT_WIDTH = 50;
 var BAR_HEIGHT = 150;
 var BAR_WIDTH = 40;
 var BAR_INTERVAL = 50;
-// var barWidth = CLOUD_WIDTH - GAP - TEXT_WIDTH - GAP;
 
 var renderCloud = function (ctx, x, y, color) {
   var offset = 10;
@@ -77,7 +75,6 @@ window.renderStatistics = function (ctx, players, times) {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
       ctx.fillStyle = 'hsl(240,' + Math.floor(Math.random() * 100) + '%' + ',50%)';
-      // ctx.fillStyle = 'hsl(240,100%,50%)'; // Синий цвет
     }
 
     ctx.fillRect(CLOUD_X + 4 * GAP + i * (BAR_WIDTH + BAR_INTERVAL), CLOUD_Y + CLOUD_HEIGHT - 3 * GAP - FONT_SIZE - times[i] * BAR_HEIGHT / maxTime, BAR_WIDTH, times[i] * BAR_HEIGHT / maxTime);
