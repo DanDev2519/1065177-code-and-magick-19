@@ -45,39 +45,37 @@ var getMaxElement = function (arr) {
   return maxElement;
 };
 
+var getRandomUpTo = function (max) {
+  return Math.floor(Math.random() * max);
+};
+
 window.renderStatistics = function (ctx, players, times) {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
 
   ctx.fillStyle = '#000';
 
+  var xText = CLOUD_X + 2 * GAP;
+  var yText = CLOUD_Y + 2 * GAP;
+
   ctx.font = '16px PT Mono';
   ctx.textBaseline = 'hanging';
-  ctx.fillText('Ура вы победили!', CLOUD_X + 2 * GAP, CLOUD_Y + 2 * GAP);
-  ctx.fillText('Список результатов: ', CLOUD_X + 2 * GAP, CLOUD_Y + 2 * GAP + FONT_SIZE);
-
-  // Проверка на случай разных длин массивов players и times
-  if (times.length !== players.length) {
-    if (times.length > players.length) {
-      times.length = players.length;
-    } else {
-      players.length = times.length;
-    }
-  }
+  ctx.fillText('Ура вы победили!', xText, yText);
+  ctx.fillText('Список результатов: ', xText, yText + FONT_SIZE);
 
   var maxTime = getMaxElement(times);
 
   for (var i = 0; i < players.length; i++) {
-    ctx.fillText(players[i], CLOUD_X + 4 * GAP + i * (BAR_WIDTH + BAR_INTERVAL), CLOUD_Y + CLOUD_HEIGHT - 2 * GAP - FONT_SIZE);
-    ctx.fillText(Math.round(times[i]), CLOUD_X + 4 * GAP + i * (BAR_WIDTH + BAR_INTERVAL), CLOUD_Y + CLOUD_HEIGHT - 3 * GAP - 2 * FONT_SIZE - times[i] * BAR_HEIGHT / maxTime);
+    var xBar = CLOUD_X + 4 * GAP + i * (BAR_WIDTH + BAR_INTERVAL);
+    var yBar = CLOUD_Y + CLOUD_HEIGHT - FONT_SIZE;
+    var timeBar = times[i] * BAR_HEIGHT / maxTime;
 
-    if (players[i] === 'Вы') {
-      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-    } else {
-      ctx.fillStyle = 'hsl(240,' + Math.floor(Math.random() * 100) + '%' + ',50%)';
-    }
+    ctx.fillText(players[i], xBar, yBar - 2 * GAP);
+    ctx.fillText(Math.round(times[i]), xBar, yBar - 3 * GAP - FONT_SIZE - timeBar);
 
-    ctx.fillRect(CLOUD_X + 4 * GAP + i * (BAR_WIDTH + BAR_INTERVAL), CLOUD_Y + CLOUD_HEIGHT - 3 * GAP - FONT_SIZE - times[i] * BAR_HEIGHT / maxTime, BAR_WIDTH, times[i] * BAR_HEIGHT / maxTime);
+    ctx.fillStyle = (players[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'hsl(240,' + getRandomUpTo(100) + '%' + ',50%)';
+
+    ctx.fillRect(xBar, yBar - 3 * GAP - timeBar, BAR_WIDTH, timeBar);
     ctx.fillStyle = '#000';
   }
 };
