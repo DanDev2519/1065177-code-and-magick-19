@@ -32,7 +32,7 @@ var renderCloud = function (ctx, x, y, color) {
 var getMaxElement = function (arr) {
   var maxElement;
   if (arr.length === 0) {
-    maxElement = NaN; // Не знаю, може нужно поставить 0 вместо  NaN
+    maxElement = NaN; // Не знаю, может нужно поставить 0 вместо  NaN
   } else {
     maxElement = arr[0];
     for (var i = 0; i < arr.length; i++) {
