@@ -21,6 +21,10 @@ var userWizard = userDialog.querySelector('.setup-wizard');
 var userWizardCoat = userWizard.querySelector('.wizard-coat');
 var userWizardEyes = userWizard.querySelector('.wizard-eyes');
 var userWizardFireball = userDialog.querySelector('.setup-fireball-wrap');
+var userWizardCoatColorInput = userDialog.querySelector('input[name="coat-color"]');
+var userWizardEyesColorInput = userDialog.querySelector('input[name="eyes-color"]');
+var userWizardFireballColorInput = userDialog.querySelector('input[name="fireball-color"]');
+// var filterInputs = document.querySelectorAll('input[type="radio"]');
 
 // Функция генерации случайного числа "вплоть до"
 var getRandomUpTo = function (max) {
@@ -124,25 +128,18 @@ userNameInput.addEventListener('invalid', function () {
 });
 
 userWizardCoat.addEventListener('click', function () {
-  userWizardCoat.style.fill = getNexElementOfArray(WIZARD_COAT_COLOR, userWizardCoat.style.fill);
+  userWizardCoatColorInput.value = getNexElementOfArray(WIZARD_COAT_COLOR, userWizardCoatColorInput.value);
+  userWizardCoat.style.fill = userWizardCoatColorInput.value;
 });
 
-// __Срабатывает изменение цвета только со второго нажатия
-// __т.к. в htlm стиль не задан, в консоли изначально userWizardEyes.style.fill = "";
-// __задать руками?
 userWizardEyes.addEventListener('click', function () {
-  userWizardEyes.style.fill = getNexElementOfArray(WIZARD_EYES_COLOR, userWizardEyes.style.fill);
+  userWizardEyesColorInput.value = getNexElementOfArray(WIZARD_EYES_COLOR, userWizardEyesColorInput.value);
+  userWizardEyes.style.fill = userWizardEyesColorInput.value;
 });
 
-// __Не срабатывает изменение цвета вообще
-// __как и с глазами, в консоли изначально userWizardFireball.style.backgroundColor = "";
-// __После первого нажатия цвет fireball записывается в формате RGB и потом меняться не хочет, т.к. в массиве в формате HEX
 userWizardFireball.addEventListener('click', function () {
-  userWizardFireball.style.backgroundColor = getNexElementOfArray(WIZARD_FIREBALL_COLOR, userWizardFireball.style.backgroundColor);
+  userWizardFireballColorInput.value = getNexElementOfArray(WIZARD_FIREBALL_COLOR, userWizardFireballColorInput.value);
+  userWizardFireball.style.backgroundColor = userWizardFireballColorInput.value;
 });
-
-// __Добавить отправкуновых значений цветов в форму
 
 init();
-
-
