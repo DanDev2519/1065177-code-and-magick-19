@@ -6,8 +6,10 @@ var WIZARD_COAT_COLOR = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 10
 var WIZARD_EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
 var NUMBER_OF_MAGES = 4;
 var WIZARD_FIREBALL_COLOR = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
-var ESC_CODE = 27;
-var ENTER_CODE = 13;
+var KeyCode = {
+  ESC_CODE: 27,
+  ENTER_CODE: 13
+};
 
 var userDialog = document.querySelector('.setup');
 var similarListElement = userDialog.querySelector('.setup-similar-list');
@@ -24,7 +26,6 @@ var userWizardFireball = userDialog.querySelector('.setup-fireball-wrap');
 var userWizardCoatColorInput = userDialog.querySelector('input[name="coat-color"]');
 var userWizardEyesColorInput = userDialog.querySelector('input[name="eyes-color"]');
 var userWizardFireballColorInput = userDialog.querySelector('input[name="fireball-color"]');
-// var filterInputs = document.querySelectorAll('input[type="radio"]');
 
 // Функция генерации случайного числа "вплоть до"
 var getRandomUpTo = function (max) {
@@ -64,13 +65,11 @@ var init = function () {
   }
   similarListElement.appendChild(fragment);
 
-  openPopup();
-
   userDialog.querySelector('.setup-similar').classList.remove('hidden');
 };
 // Функция события нажатия ESC на popup
 var onPopupEscPress = function (evt) {
-  if (evt.keyCode === ESC_CODE && !(userNameInput === document.activeElement)) {
+  if (evt.keyCode === KeyCode.ESC_CODE && !(userNameInput === document.activeElement)) {
     closePopup();
   }
 };
@@ -87,11 +86,7 @@ var closePopup = function () {
 // Функция получения следующего элемента массива
 var getNexElementOfArray = function (array, current) {
   var elementIndex = array.indexOf(current);
-  if (elementIndex === array.length - 1) {
-    elementIndex = 0;
-  } else {
-    elementIndex += 1;
-  }
+  elementIndex = (elementIndex === array.length - 1) ? 0 : elementIndex + 1;
   return array[elementIndex];
 };
 
@@ -100,7 +95,7 @@ userDialogOpen.addEventListener('click', function () {
 });
 
 userDialogOpen.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_CODE) {
+  if (evt.keyCode === KeyCode.ENTER_CODE) {
     openPopup();
   }
 });
@@ -110,7 +105,7 @@ userDialogClose.addEventListener('click', function () {
 });
 
 userDialogClose.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_CODE) {
+  if (evt.keyCode === KeyCode.ENTER_CODE) {
     closePopup();
   }
 });
@@ -128,18 +123,21 @@ userNameInput.addEventListener('invalid', function () {
 });
 
 userWizardCoat.addEventListener('click', function () {
-  userWizardCoatColorInput.value = getNexElementOfArray(WIZARD_COAT_COLOR, userWizardCoatColorInput.value);
-  userWizardCoat.style.fill = userWizardCoatColorInput.value;
+  var newCoat = getNexElementOfArray(WIZARD_COAT_COLOR, userWizardCoatColorInput.value);
+  userWizardCoatColorInput.value = newCoat;
+  userWizardCoat.style.fill = newCoat;
 });
 
 userWizardEyes.addEventListener('click', function () {
-  userWizardEyesColorInput.value = getNexElementOfArray(WIZARD_EYES_COLOR, userWizardEyesColorInput.value);
-  userWizardEyes.style.fill = userWizardEyesColorInput.value;
+  var newEyes = getNexElementOfArray(WIZARD_EYES_COLOR, userWizardEyesColorInput.value);
+  userWizardEyesColorInput.value = newEyes;
+  userWizardEyes.style.fill = newEyes;
 });
 
 userWizardFireball.addEventListener('click', function () {
-  userWizardFireballColorInput.value = getNexElementOfArray(WIZARD_FIREBALL_COLOR, userWizardFireballColorInput.value);
-  userWizardFireball.style.backgroundColor = userWizardFireballColorInput.value;
+  var newFireball = getNexElementOfArray(WIZARD_FIREBALL_COLOR, userWizardFireballColorInput.value);
+  userWizardFireballColorInput.value = newFireball;
+  userWizardFireball.style.backgroundColor = newFireball;
 });
 
 init();
